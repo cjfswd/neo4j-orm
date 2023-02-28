@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target": "ES2022",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "paths": {
+      "neo4j-orm": ["./src/package.module.ts"]
+    },
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": ["./**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "src/tests/**/*.ts",
+    "library.*.ts"
+  ]
+}

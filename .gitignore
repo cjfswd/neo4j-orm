@@ -1,0 +1,7 @@
+library.ts
+BidirectionalRelationManager.ts
+.env
+dist
+node_modules
+library.*.ts
+pnpm-lock.yaml

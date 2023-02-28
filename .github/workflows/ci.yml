@@ -1,0 +1,41 @@
+name: CI & SR
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APOC: ${{ github.workspace }}/plugins
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.15.0'
+      - name: Update npm
+        run: npm install -g npm@latest
+      - name: Install node_modules packages
+        run: npm install
+      - name: Build libraries
+        run: |
+          npm run create-common-library
+          npm run create-scd-library
+      - name: Install APOC plugin
+        run: |
+          mkdir $APOC
+          pushd $APOC
+          wget https://github.com/neo4j/apoc/releases/download/5.6.0/apoc-5.6.0-core.jar
+          popd
+      - name: Start Docker containers
+        run: docker-compose up --abort-on-container-exit --exit-code-from app
+      - name: Build package
+        run: npm run build
+      - name: Execute Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
