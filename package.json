@@ -1,7 +1,7 @@
 {
   "name": "neo4j-orm",
   "main": "dist/package.module.js",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "types": "dist/package.module.d.ts",
   "files": [
     "dist"
